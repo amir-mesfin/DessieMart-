@@ -1,0 +1,45 @@
+.lower-header {
+  background-color: #232f3e;
+  color: white;
+  font-size: 14px;
+  padding: 0.6rem 1rem;
+}
+
+.lower-header__content {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.lower-header__item {
+  cursor: pointer;
+  padding: 16px 10px;
+  padding-bottom:3px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.lower-header__item:hover {
+  background-color: #37475a;
+}
+
+/* All menu icon specific */
+.all-menu {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: bold;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .lower-header__content {
+    gap: 1rem;
+    font-size: 12px;
+  }
+
+  .lower-header {
+    padding: 0.5rem 0.8rem;
+  }
+}

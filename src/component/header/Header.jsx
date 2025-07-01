@@ -38,7 +38,7 @@ const Header = () => {
       <div className="header__right">
         <div className="header__language">
           <img src="https://flagcdn.com/us.svg" alt="lang" className="flag" />
-          <span>EN</span>
+          <span>ETH</span>
           <ArrowDropDownIcon />
         </div>
 
@@ -53,9 +53,11 @@ const Header = () => {
         </div>
 
         <div className="header__cart">
-          <ShoppingCartIcon />
+           <ShoppingCartIcon />
+           <span className="cart-count">3</span> {/* ← Add this */}
           <span className="bold-text">Cart</span>
-        </div>
+       </div>
+
       </div>
     </header>
   );

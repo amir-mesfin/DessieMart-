@@ -108,3 +108,36 @@
     flex-wrap: wrap;
   }
 }
+/* Add to existing styles or below them */
+
+.header__navItem:hover,
+.header__cart:hover,
+.header__language:hover,
+.header__location:hover {
+  border: 1px solid #fff;
+  border-radius: 4px;
+  padding: 4px 6px;
+  transition: all 0.3s ease;
+}
+
+.cart-count {
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  background-color: #f08804;
+  color: black;
+  font-weight: bold;
+  font-size: 12px;
+  border-radius: 50%;
+  padding: 2px 6px;
+}
+
+/* Make sure the cart container is positioned relatively */
+.header__cart {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  cursor: pointer;
+}
+
