@@ -1,4 +1,10 @@
 .lower-header {
+  position: fixed;
+  top: 60px; /* Adjust if your .header height is different */
+  left: 0;
+  right: 0;
+  z-index: 998;
+
   background-color: #232f3e;
   color: white;
   font-size: 14px;
@@ -6,6 +12,81 @@
   overflow-x: auto;
   white-space: nowrap;
   scrollbar-width: none; /* Firefox */
+  .lower-header {
+  position: fixed;
+  top: 60px; /* Adjust if your .header height is different */
+  left: 0;
+  right: 0;
+  z-index: 998;
+
+  background-color: #232f3e;
+  color: white;
+  font-size: 14px;
+  padding: 0.6rem 1rem;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none; /* Firefox */
+}
+
+.lower-header::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+.lower-header__content {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: nowrap;
+  padding-top: 13px;
+}
+
+.lower-header__item {
+  cursor: pointer;
+  padding: 8px 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 150px;
+}
+
+.lower-header__item:hover {
+  background-color: #37475a;
+}
+
+/* All menu icon */
+.all-menu {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: bold;
+}
+
+/* Optional: Active category highlight */
+.lower-header__item.active {
+  background-color: #ff9900;
+  color: #111;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .lower-header {
+    padding: 0.5rem 0.8rem;
+    top: 60px; /* Keep this consistent */
+  }
+
+  .lower-header__content {
+    gap: 1rem;
+    font-size: 13px;
+  }
+
+  .lower-header__item {
+    padding: 6px 8px;
+    max-width: 120px;
+  }
+}
+
 }
 
 .lower-header::-webkit-scrollbar {
@@ -52,6 +133,7 @@
 @media screen and (max-width: 768px) {
   .lower-header {
     padding: 0.5rem 0.8rem;
+    top: 60px; /* Keep this consistent */
   }
 
   .lower-header__content {

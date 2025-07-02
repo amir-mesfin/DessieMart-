@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './CatagoryCard.module.css';
+import { Link } from "react-router-dom";
 
 // Optional: if you still want to format the slug
 function formatSlug(slug) {
@@ -26,7 +27,11 @@ function CatagoryCard({ title, products, linkUrl }) {
           </div>
         ))}
       </div>
-      <a href={linkUrl} className={styles.link}>Explore {displayTitle}</a>
+      <Link to={`/product/${title.slug}`} className={styles.link}>
+        Explore {displayTitle}
+      </Link>
+
+      {/* <a href={linkUrl} className={styles.link}>Explore {displayTitle}</a> */}
     </div>
   );
 }

@@ -5,6 +5,25 @@
   padding: 16px;
   max-width: 300px;
   width: 100%;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  animation: fadeInUp 0.5s ease forwards;
+  opacity: 0;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  transform: translateY(-5px);
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0px);
+    opacity: 1;
+  }
 }
 
 .card h3 {
@@ -16,6 +35,14 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
+}
+
+.item {
+  transition: transform 0.3s ease;
+}
+
+.item:hover {
+  transform: scale(1.05);
 }
 
 .item img {
@@ -36,4 +63,9 @@
   color: #007185;
   font-weight: 500;
   text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.link:hover {
+  color: #f08804;
 }

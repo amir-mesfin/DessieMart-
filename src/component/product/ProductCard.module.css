@@ -1,0 +1,94 @@
+.productCard {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px;
+  width: 250px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.3s ease;
+  background-color: white;
+}
+
+.productCard:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.productImage {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  margin-bottom: 15px;
+}
+
+.productInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.productTitle {
+  font-size: 16px;
+  margin: 0 0 10px 0;
+  color: #0066c0;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+.ratingContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.starRating {
+  display: inline-block;
+}
+
+.filledStar {
+  color: #FFA41C;
+}
+
+.emptyStar {
+  color: #DDD;
+}
+
+.ratingCount {
+  color: #0066c0;
+  margin-left: 5px;
+  font-size: 14px;
+}
+
+.priceContainer {
+  margin-bottom: 10px;
+}
+
+.originalPrice {
+  text-decoration: line-through;
+  color: #565959;
+  margin-right: 5px;
+  font-size: 14px;
+}
+
+.discountPercentage {
+  color: #B12704;
+  font-size: 14px;
+}
+
+.currentPrice {
+  font-size: 20px;
+  font-weight: bold;
+  color: #B12704;
+  display: block;
+}
+
+.inStock {
+  color: #067D62;
+  font-size: 14px;
+}
+
+.outOfStock {
+  color: #B12704;
+  font-size: 14px;
+}
