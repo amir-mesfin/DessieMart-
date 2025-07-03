@@ -5,7 +5,7 @@ import LowerHeader from './component/header/LowerHeader'
 import Carousels from './component/carousel/Carousels'
 import Catagory from './component/catagory/Catagory'
 import Product from './component/product/Product'
-
+import ProductDescription from './component/productDescription/ProductDescription'
 export default function App() {
   return (
     <Router>
@@ -23,6 +23,7 @@ export default function App() {
           }
         />
         <Route path="/product/:categoryName" element={<Product />} />
+        <Route path="/productDescriptions/:id" element={ <ProductDescription />} />
       </Routes>
     </Router>
   )

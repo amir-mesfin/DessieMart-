@@ -8,7 +8,7 @@ function Product() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+console.log(categoryName);
   useEffect(() => {
     const fetchCategoryProducts = async () => {
       try {
@@ -42,7 +42,7 @@ function Product() {
       <h1 className={styles.categoryTitle}>{categoryName.replace('-', ' ')}</h1>
       <div className={styles.productGrid}>
         {products.map(product => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product.id} product={product} cata={categoryName}/>
         ))}
       </div>
     </div>
