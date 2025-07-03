@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProductCard from "../product/ProductCard";
 import styles from './Product.module.css';
+import LayOut from "../../pages/layOut/LayOut";
 
 function Product() {
   const { categoryName } = useParams(); 
@@ -38,6 +39,7 @@ console.log(categoryName);
   }
 
   return (
+    <LayOut>
     <div className={styles.productPage}>
       <h1 className={styles.categoryTitle}>{categoryName.replace('-', ' ')}</h1>
       <div className={styles.productGrid}>
@@ -46,6 +48,7 @@ console.log(categoryName);
         ))}
       </div>
     </div>
+    </LayOut>
   );
 }
 

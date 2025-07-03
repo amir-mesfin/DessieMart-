@@ -366,3 +366,20 @@
   color: #1e3aec;
   text-decoration: underline;
 }
+
+.loading {
+  text-align: center;
+  padding: 50px;
+  font-size: 18px;
+  margin:auto;
+  margin-top:160px;
+}
+
+.error {
+  text-align: center;
+  padding: 50px;
+  font-size: 18px;
+  color: #B12704;
+  margin:auto;
+  margin-top:160px;
+}
