@@ -5,7 +5,7 @@ import Signup from './pages/Auth/Signup'
 import Payment from './pages/Payment/Payment'
 import Order from './pages/Orders/Order'
 import Cart from './pages/Cart/Cart'
-import Product from './component/product/Product'
+import Product from './pages/product/Product'
 import ProductDescription  from './pages/productDescription/ProductDescription'
 export default function Routering() {
   return (
@@ -17,7 +17,7 @@ export default function Routering() {
          <Route path="/order" element ={<Order />} />
          <Route path="/cart" element ={<Cart />} />
          <Route path="/product/:categoryName" element={<Product />} />
-         <Route path="/productDescriptions/:id" element={ <ProductDescription />} />
+         <Route path="/productDescriptions/:productId" element={ <ProductDescription />} />
       </Routes>
    </Router>
   )

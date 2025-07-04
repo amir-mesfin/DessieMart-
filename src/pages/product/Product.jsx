@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import ProductCard from "../product/ProductCard"
+import ProductCard from "./ProductCard"
 import styles from './Product.module.css'
-import LayOut from "../../pages/layOut/LayOut"
+import LayOut from "../layOut/LayOut"
 import {ProductUrl} from '../../Api/EndPoint'
+import FadeLoaderComponent from "../../component/Loader/FadeLoaderComponent"
 function Product() {
   const { categoryName } = useParams(); 
   const [products, setProducts] = useState([]);
@@ -30,24 +31,25 @@ console.log(categoryName);
     fetchCategoryProducts();
   }, [categoryName]);
 
-  if (loading) {
-    return <div className={styles.loading}>Loading products...</div>;
-  }
+  // if (loading) {
+  //   return <FadeLoaderComponent  />;
+  // }
 
-  if (error) {
-    return <div className={styles.error}>Error: {error}</div>;
-  }
+  // if (error) {
+  //   return <div className={styles.error}>Error: {error}</div>;
+  // }
 
   return (
     <LayOut>
-    <div className={styles.productPage}>
-      <h1 className={styles.categoryTitle}>{categoryName.replace('-', ' ')}</h1>
-      <div className={styles.productGrid}>
-        {products.map(product => (
-          <ProductCard key={product.id} product={product} cata={categoryName}/>
-        ))}
-      </div>
-    </div>
+      {loading? (<FadeLoaderComponent  />) : ( <div className={styles.productPage}>
+                                                <h1 className={styles.categoryTitle}>{categoryName.replace('-', ' ')}</h1>
+                                                <div className={styles.productGrid}>
+                                                  {products.map(product => (
+                                                    <ProductCard key={product.id} product={product} cata={categoryName}/>
+                                                  ))}
+                                                </div>
+                                              </div>) }
+
     </LayOut>
   );
 }
