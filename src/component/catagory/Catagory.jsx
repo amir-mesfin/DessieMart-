@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import styles from './Catagory.module.css';
-import CatagoryCard from './CatagoryCard';
-
+import React, { useEffect, useState } from 'react'
+import styles from './Catagory.module.css'
+import CatagoryCard from './CatagoryCard'
+import {ProductUrl} from '../../Api/EndPoint'
 function Catagory() {
   const [categories, setCategories] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
-    fetch('https://dummyjson.com/products/categories')
+    fetch(`${ProductUrl}/products/categories`)
       .then(res => res.json())
       .then(categoryList => {
         // categoryList is now: [{slug, name, url}, ...]
@@ -16,7 +16,7 @@ function Catagory() {
         // Fetch products for each category
         Promise.all(
           categoryList.map(cat =>
-            fetch(`https://dummyjson.com/products/category/${cat.slug}`)
+            fetch(`${ProductUrl}/products/category/${cat.slug}`)
               .then(res => res.json())
               .then(data => ({
                 title: cat, // full object { slug, name, url }

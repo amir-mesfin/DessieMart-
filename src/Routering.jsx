@@ -6,7 +6,7 @@ import Payment from './pages/Payment/Payment'
 import Order from './pages/Orders/Order'
 import Cart from './pages/Cart/Cart'
 import Product from './component/product/Product'
-import ProductDescription from './component/productDescription/ProductDescription'
+import ProductDescription  from './pages/productDescription/ProductDescription'
 export default function Routering() {
   return (
    <Router>

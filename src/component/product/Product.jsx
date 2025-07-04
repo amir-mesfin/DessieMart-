@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import ProductCard from "../product/ProductCard";
-import styles from './Product.module.css';
-import LayOut from "../../pages/layOut/LayOut";
-
+import React, { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
+import ProductCard from "../product/ProductCard"
+import styles from './Product.module.css'
+import LayOut from "../../pages/layOut/LayOut"
+import {ProductUrl} from '../../Api/EndPoint'
 function Product() {
   const { categoryName } = useParams(); 
   const [products, setProducts] = useState([]);
@@ -14,7 +14,7 @@ console.log(categoryName);
     const fetchCategoryProducts = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`https://dummyjson.com/products/category/${categoryName}`);
+        const res = await fetch(`${ProductUrl}/products/category/${categoryName}`);
         if (!res.ok) {
           throw new Error('Failed to fetch products');
         }

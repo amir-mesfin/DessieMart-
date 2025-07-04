@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";  // <-- Added useNavigate
+import { useParams, useNavigate } from "react-router-dom"; 
 import styles from "./ProductDescription.module.css";
-import LayOut from "../../pages/layOut/LayOut";
+import LayOut from "../layOut/LayOut";
 
 function ProductDescription() {
   const { id } = useParams();
