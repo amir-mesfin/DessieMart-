@@ -2,9 +2,21 @@ import React from 'react';
 import styles from './ProductCard.module.css';
 import Rating from '@mui/material/Rating';
 import { Link } from "react-router-dom";
+import { useContext } from 'react';
+import { DataProvider } from '../../component/dataProvider/DataProvider';
+import { Type } from '../../utility/action.type';
 
 function ProductCard({ product }) {
   const discountedPrice = product.price - (product.price * product.discountPercentage / 100);
+
+  const [state,dispatch]= useContext(DataProvider);
+
+  const addToCar = ()=>{
+      dispatch({
+        type:Type.ADD_TO_BASKET,
+        item: product
+      })
+  }
 
   return (
     <div className={styles.productCard}>
@@ -47,7 +59,7 @@ function ProductCard({ product }) {
         )}
 
         {/* New button added */}
-        <button className={styles.addToCartBtn}>Quick View</button>
+        <button className={styles.addToCartBtn} onClick={addToCart}>Quick View</button>
       </div>
     </div>
   );

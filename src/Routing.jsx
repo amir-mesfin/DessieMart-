@@ -7,7 +7,7 @@ import Order from './pages/Orders/Order'
 import Cart from './pages/Cart/Cart'
 import Product from './pages/product/Product'
 import ProductDescription  from './pages/productDescription/ProductDescription'
-export default function Routering() {
+export default function Routing() {
   return (
    <Router>
       <Routes>

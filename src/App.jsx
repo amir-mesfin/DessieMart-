@@ -1,6 +1,6 @@
 import React from 'react'
-import Routering from './Routering'
+import Routing from './Routing'
 
 export default function App() {
-  return   <Routering />
+  return   <Routing />
 }
