@@ -10,7 +10,7 @@ function Product() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-console.log(categoryName);
+// console.log(categoryName);
   useEffect(() => {
     const fetchCategoryProducts = async () => {
       try {
@@ -30,14 +30,6 @@ console.log(categoryName);
 
     fetchCategoryProducts();
   }, [categoryName]);
-
-  // if (loading) {
-  //   return <FadeLoaderComponent  />;
-  // }
-
-  // if (error) {
-  //   return <div className={styles.error}>Error: {error}</div>;
-  // }
 
   return (
     <LayOut>

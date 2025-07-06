@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './header.css';
 import logo from '../../assets/image/DessieMartLogo.png';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { DataContext } from '../dataProvider/DataProvider';
 
 const Header = () => {
+    const [{basket},dispatch] = useContext(DataContext);
+    //  console.log(state.basket.length)
   return (
     <header className="header">
       {/* Logo & Deliver */}
@@ -54,7 +57,7 @@ const Header = () => {
 
         <div className="header__cart">
            <ShoppingCartIcon />
-           <span className="cart-count">3</span> {/* ← Add this */}
+           <span className="cart-count">{basket.length}</span> {/* ← Add this */}
           <span className="bold-text">Cart</span>
        </div>
 
