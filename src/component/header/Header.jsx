@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './header.css';
 import { Link } from "react-router-dom";
 import logo from '../../assets/image/DessieMartLogo.png';
@@ -7,10 +7,32 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { DataContext } from '../dataProvider/DataProvider';
+import { ProductUrl } from '../../Api/EndPoint';
 
 const Header = () => {
     const [{basket},dispatch] = useContext(DataContext);
+    const [isCategory, setCategory]= useState([])
     //  console.log(state.basket.length)
+    useEffect(()=>{
+      const  fetchCategory = async ()  =>{
+          try{
+            const res = await fetch(`${ProductUrl}/product/category-list`);
+            if(!res.ok){
+              throw new Error("failed to fetch category");
+              
+            }
+            const data = await res.json();
+            setCategory(data);
+
+          }catch(err){
+            throw new Error ("error happening");
+          }
+      };
+      fetchCategory();
+
+    }, []);
+
+
   return (
     <header className="header">
       {/* Logo & Deliver */}
@@ -28,11 +50,11 @@ const Header = () => {
       {/* Search bar with Select */}
       <div className="header__search">
         <select className="header__select">
-          <option value="all">All</option>
-          <option value="electronics">Electronics</option>
-          <option value="fashion">Fashion</option>
-          <option value="home">Home & Kitchen</option>
-          <option value="books">Books</option>
+           {
+             isCategory.map((item)=>{
+               return <option value="item">{item}</option>
+             })
+           }
         </select>
         <input type="text" placeholder="Search DessieMart..." />
         <SearchIcon className="header__searchIcon" />
