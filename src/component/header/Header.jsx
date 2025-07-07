@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import './header.css';
+import { Link } from "react-router-dom";
 import logo from '../../assets/image/DessieMartLogo.png';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -54,12 +55,16 @@ const Header = () => {
           <span className="small-text">Returns</span>
           <span className="bold-text">& Orders</span>
         </div>
+        <Link to="/cart" >
+            <div className="header__cart">
+                <ShoppingCartIcon />
+                <span className="cart-count">{basket.length}</span> {/* ← Add this */}
+                <span className="bold-text">Cart</span>
 
-        <div className="header__cart">
-           <ShoppingCartIcon />
-           <span className="cart-count">{basket.length}</span> {/* ← Add this */}
-          <span className="bold-text">Cart</span>
-       </div>
+            </div>
+        </Link>
+       
+
 
       </div>
     </header>

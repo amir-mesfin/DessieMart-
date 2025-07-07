@@ -4,17 +4,23 @@ import styles from "./ProductDescription.module.css";
 import LayOut from "../layOut/LayOut";
 import {ProductUrl} from '../../Api/EndPoint'
 import Rating from '@mui/material/Rating';
+import { useLocation } from 'react-router-dom';
 import FadeLoaderComponent from "../../component/Loader/FadeLoaderComponent";
 
+
 function ProductDescription() {
-  const { productId } = useParams();
-  const navigate = useNavigate();  // <-- Initialize navigate
+  const location = useLocation();// // use Link pass by State
+  const { productId } = useParams(); 
+  const navigate = useNavigate();  //// <-- Initialize navigate
 
   const [loading, setLoading] = useState(true);
   const [singleProduct, setSingleProduct] = useState(null);
   const [error, setError] = useState(null);
   const [mainImage, setMainImage] = useState("");
 
+  const ProductCart = location.state?.cartDescription;
+//  console.log(ProductCart.isCartItems);
+  const {isCartItems}= ProductCart;
   useEffect(() => {
     const fetchSingleProductById = async () => {
       try {
@@ -139,7 +145,7 @@ function ProductDescription() {
                                                   </div>
 
                                                   {/* Add to Cart button (non-functional) */}
-                                                  <div className={styles.actionButtons}>
+                                                {  !isCartItems && <div className={styles.actionButtons}>
                                                     <button
                                                       className={styles.addToCart}
                                                       disabled={stock <= 0}
@@ -152,7 +158,7 @@ function ProductDescription() {
                                                     >
                                                       Buy Now
                                                     </button>
-                                                  </div>
+                                                  </div>}
                                                 </div>
                                                 </div>
 )}
