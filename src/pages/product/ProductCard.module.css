@@ -426,3 +426,115 @@
     height: 150px;
   }
 }
+
+/* increment/Decrement Buttons in the cart  */
+
+/* Add this to your ProductCard.module.css */
+.quantityControl {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.quantityBtn {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ddd;
+  background-color: #f8f8f8;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantityBtn:hover {
+  background-color: #e0e0e0;
+}
+
+.quantityInput {
+  width: 40px;
+  height: 28px;
+  text-align: center;
+  margin: 0 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+/* Compact version */
+.compactQuantity {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 5px 0;
+}
+
+.compactQuantity button {
+  width: 25px;
+  height: 25px;
+  border: none;
+  background: #f5f5f5;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.compactQuantity span {
+  padding: 0 10px;
+  min-width: 20px;
+  text-align: center;
+}
+/* ... (keep all your existing styles) ... */
+
+/* Quantity Control Styles */
+.quantityControl {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  padding: 8px 0;
+  border-top: 1px solid #f0f0f0;
+}
+
+.quantityButton {
+  color: #1976d2;
+  padding: 4px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.quantityButton:hover {
+  background-color: #f5f5f5;
+}
+
+.quantityButton:disabled {
+  color: #bdbdbd;
+  cursor: not-allowed;
+}
+
+.quantityValue {
+  margin: 0 12px;
+  font-weight: 500;
+  min-width: 24px;
+  text-align: center;
+}
+
+/* Cart item specific quantity control */
+.productCard.cartItem .quantityControl {
+  border-top: none;
+  padding: 0;
+  margin: 8px 0;
+}
+
+.productCard.cartItem .quantityButton {
+  width: 28px;
+  height: 28px;
+}
+
+.productCard.cartItem .quantityValue {
+  font-size: 1rem;
+}

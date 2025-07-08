@@ -8,10 +8,10 @@ import CurrencyFormat from '../../component/currencyFormat/CurrencyFormat';
 
 export default function Cart() {
   const [{basket, user}, dispatch] = useContext(DataContext);
-  
+  console.log(basket);
   // Calculate total price
   const totalPrice = basket.reduce((sum, item) => { 
-    return sum + item.price
+    return sum + (item.price * item.amount)
     },0)
     console.log(totalPrice);
 

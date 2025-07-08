@@ -5,28 +5,44 @@ import { Link } from "react-router-dom";
 import { useContext } from 'react';
 import { DataContext } from '../../component/dataProvider/DataProvider';
 import { Type } from '../../utility/action.type';
+import { IconButton, Box, Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 function ProductCard({ product, isCartItem }) {
   const discountedPrice = product.price - (product.price * product.discountPercentage / 100);
-
   const [state, dispatch] = useContext(DataContext);
 
   const addToCart = () => {
     dispatch({
       type: Type.ADD_TO_BASKET,
-      item: product
-    })
-  }
-const cartDescription ={
-    id:product.id,
-    isCartItems:isCartItem
-}
+      item
+    });
+  };
+
+  const incrementQuantity = (item) => {
+    dispatch({
+      type: Type.ADD_TO_BASKET,
+      id: product.id
+    });
+  };
+
+  const decrementQuantity = () => {
+    dispatch({
+      type: Type.DECREMENT_ITEM,
+      id: product.id
+    });
+  };
+
+  const cartDescription = {
+    id: product.id,
+    isCartItems: isCartItem
+  };
+
   return (
     <div className={`${styles.productCard} ${isCartItem ? styles.cartItem : ''}`}>
       <div className={styles.imageWrapper}>
-        <Link to={{pathname:`/productDescriptions/${product.id}`,}}
-                    state={{ cartDescription }}
-             >
+        <Link to={{pathname:`/productDescriptions/${product.id}`}} state={{ cartDescription }}>
           <img 
             src={product.thumbnail} 
             alt={product.title} 
@@ -66,10 +82,33 @@ const cartDescription ={
           </>
         )}
 
-        {!isCartItem && (
+        {!isCartItem ? (
           <button className={styles.addToCartBtn} onClick={addToCart}>
             Add to Cart
           </button>
+        ) : (
+          <Box className={styles.quantityControl}>
+            <IconButton 
+              size="small" 
+              onClick={()=>decrementQuantity(item.id)}
+              disabled={product.amount <= 1}
+              className={styles.quantityButton}
+            >
+              <RemoveIcon fontSize="small" />
+            </IconButton>
+            
+            <Typography variant="body1" className={styles.quantityValue}>
+              {product.amount}
+            </Typography>
+            
+            <IconButton 
+              size="small" 
+              onClick={()=>incrementQuantity(item)}
+              className={styles.quantityButton}
+            >
+              <AddIcon fontSize="small" />
+            </IconButton>
+          </Box>
         )}
       </div>
     </div>
