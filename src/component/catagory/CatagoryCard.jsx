@@ -11,10 +11,8 @@ function formatSlug(slug) {
 }
 
 function CatagoryCard({ title, products, linkUrl }) {
-  // Expecting title to be an object like { slug, name, url }
   const displayTitle = title?.name || formatSlug(title?.slug) || 'UNKNOWN';
 
-  // console.log("CatagoryCard props:", { title, products, linkUrl });
 
   return (
     <div className={styles.card}>
@@ -31,7 +29,6 @@ function CatagoryCard({ title, products, linkUrl }) {
         Explore {displayTitle}
       </Link>
 
-      {/* <a href={linkUrl} className={styles.link}>Explore {displayTitle}</a> */}
     </div>
   );
 }

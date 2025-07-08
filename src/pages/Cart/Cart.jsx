@@ -4,12 +4,16 @@ import { DataContext } from '../../component/dataProvider/DataProvider'
 import ProductCard from '../product/ProductCard';
 import styles from './Cart.module.css'
 import { ShoppingCartOutlined } from '@ant-design/icons'; // or any other icon library
+import CurrencyFormat from '../../component/currencyFormat/CurrencyFormat';
 
 export default function Cart() {
   const [{basket, user}, dispatch] = useContext(DataContext);
   
   // Calculate total price
-  const totalPrice = basket?.reduce((sum, item) => sum + (item.price * item.quantity), 0) || 0;
+  const totalPrice = basket.reduce((sum, item) => { 
+    return sum + item.price
+    },0)
+    console.log(totalPrice);
 
   return (
     <LayOut>
@@ -26,10 +30,11 @@ export default function Cart() {
         ) : (
           <>
             <div className={styles.productGrid}>
-              {basket?.slice(0).map((item) => (
+              {basket?.slice(0).map((item,index) => (
                <ProductCard 
                product={item} 
                isCartItem={true}
+               key={index}
               //  quantity={item.quantity}
               //  onRemove={handleRemove}
               //  onQuantityChange={handleQuantityChange}
@@ -40,7 +45,8 @@ export default function Cart() {
             <div className={styles.cartSummary}>
               <h3 className={styles.summaryTitle}>Order Summary</h3>
               <div className={styles.totalAmount}>
-                Total: ${totalPrice.toFixed(2)}
+                {/* Total: ${totalPrice.toFixed(2)} */}
+                <CurrencyFormat amount={totalPrice} />
               </div>
               <button className={styles.checkoutButton}>
                 Proceed to Checkout

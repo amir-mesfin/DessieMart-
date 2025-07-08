@@ -12,7 +12,6 @@ import { ProductUrl } from '../../Api/EndPoint';
 const Header = () => {
     const [{basket},dispatch] = useContext(DataContext);
     const [isCategory, setCategory]= useState([])
-    //  console.log(state.basket.length)
     useEffect(()=>{
       const  fetchCategory = async ()  =>{
           try{
@@ -51,8 +50,8 @@ const Header = () => {
       <div className="header__search">
         <select className="header__select">
            {
-             isCategory.map((item)=>{
-               return <option value="item">{item}</option>
+             isCategory.map((item,index)=>{
+               return   <option value="item" key={index}>{item}</option>
              })
            }
         </select>
