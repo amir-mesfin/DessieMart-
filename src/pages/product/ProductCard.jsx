@@ -16,13 +16,13 @@ function ProductCard({ product, isCartItem }) {
   const addToCart = () => {
     dispatch({
       type: Type.ADD_TO_BASKET,
-      item
+      item: product
     });
   };
 
-  const incrementQuantity = (item) => {
+  const incrementQuantity = () => {
     dispatch({
-      type: Type.ADD_TO_BASKET,
+      type: Type.INCREMENT_ITEM,
       id: product.id
     });
   };
@@ -90,7 +90,7 @@ function ProductCard({ product, isCartItem }) {
           <Box className={styles.quantityControl}>
             <IconButton 
               size="small" 
-              onClick={()=>decrementQuantity(item.id)}
+              onClick={decrementQuantity}
               disabled={product.amount <= 1}
               className={styles.quantityButton}
             >

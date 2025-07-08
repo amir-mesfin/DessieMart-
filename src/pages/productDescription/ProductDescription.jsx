@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom"; 
 import styles from "./ProductDescription.module.css";
 import LayOut from "../layOut/LayOut";
@@ -6,6 +6,9 @@ import {ProductUrl} from '../../Api/EndPoint'
 import Rating from '@mui/material/Rating';
 import { useLocation } from 'react-router-dom';
 import FadeLoaderComponent from "../../component/Loader/FadeLoaderComponent";
+import { DataContext } from "../../component/dataProvider/DataProvider";
+import { Type } from '../../utility/action.type';
+
 
 function ProductDescription() {
   const location = useLocation();
@@ -18,7 +21,8 @@ function ProductDescription() {
 
   const ProductCart = location.state?.cartDescription;
   const {isCartItems} = ProductCart || {};
-
+  const [state, dispatch] = useContext(DataContext);
+   
   useEffect(() => {
     const fetchSingleProductById = async () => {
       try {
@@ -90,6 +94,13 @@ function ProductDescription() {
     price -
     (price * discountPercentage) / 100
   ).toFixed(2);
+
+  const addToCart = () => {
+    dispatch({
+      type: Type.ADD_TO_BASKET,
+      item: singleProduct
+    });
+  };
 
   return ( 
     <LayOut>
@@ -167,6 +178,7 @@ function ProductDescription() {
               <button
                 className={styles.addToCart}
                 disabled={stock <= 0}
+                onClick={addToCart}
               >
                 Add to Cart
               </button>
