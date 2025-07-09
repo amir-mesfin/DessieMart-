@@ -20,17 +20,17 @@ function ProductCard({ product, isCartItem }) {
     });
   };
 
-  const incrementQuantity = () => {
+  const incrementQuantity = (item) => {
     dispatch({
       type: Type.INCREMENT_ITEM,
-      id: product.id
+      item
     });
   };
 
-  const decrementQuantity = () => {
+  const decrementQuantity = (item) => {
     dispatch({
       type: Type.DECREMENT_ITEM,
-      id: product.id
+      item
     });
   };
 
@@ -90,8 +90,8 @@ function ProductCard({ product, isCartItem }) {
           <Box className={styles.quantityControl}>
             <IconButton 
               size="small" 
-              onClick={decrementQuantity}
-              disabled={product.amount <= 1}
+              onClick={ () => decrementQuantity(product)}
+              disabled={product.amount < 1}
               className={styles.quantityButton}
             >
               <RemoveIcon fontSize="small" />
@@ -103,7 +103,7 @@ function ProductCard({ product, isCartItem }) {
             
             <IconButton 
               size="small" 
-              onClick={()=>incrementQuantity(item)}
+              onClick={()=>incrementQuantity(product)}
               className={styles.quantityButton}
             >
               <AddIcon fontSize="small" />

@@ -34,13 +34,31 @@ export const reducer = (state, action) => {
           )
         };
       
-      case Type.DECREMENT_ITEM:
-        return {
-          ...state,
-          basket: state.basket.map(item =>
-            item.id === action.item.id ? {...item, amount: Math.max(1, item.amount - 1)} : item
-          )
-        };
+        case Type.DECREMENT_ITEM:
+          const index = state.basket.findIndex(item => item.id === action.item.id);
+          let newBasket = [...state.basket];
+          
+          if(index >= 0) {
+              if(newBasket[index].amount > 1) {
+                  newBasket[index] = {
+                      ...newBasket[index],
+                      amount: newBasket[index].amount - 1
+                  };
+              } else {
+                  newBasket.splice(index, 1);
+              }
+          }
+          
+          return {
+              ...state,
+              basket: newBasket
+          };
+        // return {
+        //   ...state,
+        //   basket: state.basket.map(item =>
+        //     item.id === action.item.id ? {...item, amount: Math.max(1, item.amount - 1)} : item
+        //   )
+        // };
       
     default:
       return state;
