@@ -11,6 +11,9 @@ import { ProductUrl } from '../../Api/EndPoint';
 
 const Header = () => {
     const [{basket},dispatch] = useContext(DataContext);
+    const totalItemInTheCart = basket?.reduce((amount,item)=>{
+      return item.amount + amount
+    },0)
     const [isCategory, setCategory]= useState([])
     useEffect(()=>{
       const  fetchCategory = async ()  =>{
@@ -79,7 +82,7 @@ const Header = () => {
         <Link to="/cart" >
             <div className="header__cart">
                 <ShoppingCartIcon />
-                <span className="cart-count">{basket.length}</span> {/* ← Add this */}
+                <span className="cart-count">{totalItemInTheCart}</span> {/* ← Add this */}
                 <span className="bold-text">Cart</span>
 
             </div>
