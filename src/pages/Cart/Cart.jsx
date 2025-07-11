@@ -2,18 +2,19 @@ import React, { useContext } from 'react'
 import LayOut from '../layOut/LayOut'
 import { DataContext } from '../../component/dataProvider/DataProvider'
 import ProductCard from '../product/ProductCard';
+import { Link } from "react-router-dom";
 import styles from './Cart.module.css'
 import { ShoppingCartOutlined } from '@ant-design/icons'; // or any other icon library
 import CurrencyFormat from '../../component/currencyFormat/CurrencyFormat';
 
 export default function Cart() {
   const [{basket, user}, dispatch] = useContext(DataContext);
-  console.log(basket);
+  // console.log(basket);
   // Calculate total price
   const totalPrice = basket.reduce((sum, item) => { 
     return sum + (item.price * item.amount)
     },0)
-    console.log(totalPrice);
+    // console.log(totalPrice);
 
   return (
     <LayOut>
@@ -48,9 +49,11 @@ export default function Cart() {
                 {/* Total: ${totalPrice.toFixed(2)} */}
                 <CurrencyFormat amount={totalPrice} />
               </div>
+              <Link to="/payment">
               <button className={styles.checkoutButton}>
                 Proceed to Checkout
               </button>
+              </Link>
             </div>
           </>
         )}
