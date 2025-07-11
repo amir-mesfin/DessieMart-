@@ -66,17 +66,26 @@
   color: black;
   cursor: pointer;
 }
-
+.link_account{
+  text-decoration: none;
+  color:white;
+}
+.link_account dev span{
+  color:white;
+}
 /* Right nav section */
 .header__right {
   display: flex;
   align-items: center;
   gap: 1.5rem;
-}
-.header__navItem {
+ }
+.header__navItem{
   display: flex;
   flex-direction: column;
   cursor: pointer;
+}
+.header__navItem span{
+  color: white;
 }
 .header__cart {
   position: relative;
@@ -84,6 +93,10 @@
   align-items: center;
   gap: 0.3rem;
   cursor: pointer;
+}
+.cart_Link{
+
+  text-decoration: none;
 }
 .cart-count {
   position: absolute;
@@ -137,4 +150,7 @@
     padding: 0.5rem 0;
     flex-wrap: wrap;
   }
+}
+.header__cart span {
+  color: white;
 }

@@ -69,19 +69,21 @@ const Header = () => {
           <span>ETH</span>
           <ArrowDropDownIcon />
         </div>
-
-        <div className="header__navItem">
-          <span className="small-text">Hello, Abushe</span>
-          <span className="bold-text">Account & Lists</span>
-        </div>
+        <Link to="/auth" className="link_account">
+              <div className="header__navItem">
+                <span className="small-text">Sign in </span>
+                <span className="bold-text">Account & Lists</span>
+              </div>
+        </Link>
+       
 
         <div className="header__navItem">
           <span className="small-text">Returns</span>
           <span className="bold-text">& Orders</span>
         </div>
-        <Link to="/cart" >
+        <Link  className="cart_Link" to="/cart" >
             <div className="header__cart">
-                <ShoppingCartIcon />
+            <ShoppingCartIcon style={{ color: "white" }} />
                 <span className="cart-count">{totalItemInTheCart}</span> {/* ← Add this */}
                 <span className="bold-text">Cart</span>
 

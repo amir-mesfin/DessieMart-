@@ -1,7 +1,7 @@
 import React from 'react'
 import LayOut from '../layOut/LayOut'
 
-export default function Signup() {
+export default function Auth() {
   return (
     <LayOut>
     <div>
