@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './Signup.module.css';
+import DessieMartLogo from '../../assets/image/DessieMartLogo.png'; 
 import { FcGoogle } from 'react-icons/fc';
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
-
 const Auth = () => {
   const [isLogin, setIsLogin] = React.useState(true);
   const [showPassword, setShowPassword] = React.useState(false);
@@ -10,6 +10,12 @@ const Auth = () => {
   return (
     <div className={styles.authContainer}>
       <div className={styles.authCard}>
+        {/* Add logo container here */}
+        <div className={styles.logoContainer}>
+          <img src={DessieMartLogo} alt="DessieMart Logo" className={styles.logo} />
+          <h1 className={styles.brandName}>DessieMart</h1>
+        </div>
+        
         <h2 className={styles.authTitle}>
           {isLogin ? 'Sign In' : 'Create Account'}
         </h2>
