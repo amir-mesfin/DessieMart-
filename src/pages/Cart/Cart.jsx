@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import styles from './Cart.module.css'
 import { ShoppingCartOutlined } from '@ant-design/icons'; // or any other icon library
 import CurrencyFormat from '../../component/currencyFormat/CurrencyFormat';
-
 export default function Cart() {
   const [{basket, user}, dispatch] = useContext(DataContext);
   // console.log(basket);

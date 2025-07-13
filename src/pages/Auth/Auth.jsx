@@ -1,16 +1,26 @@
-import React from 'react';
+import React,{useState} from 'react';
 import styles from './Signup.module.css';
 import DessieMartLogo from '../../assets/image/DessieMartLogo.png'; 
 import { FcGoogle } from 'react-icons/fc';
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
+import {auth} from '../../utility/firebase'
 const Auth = () => {
   const [isLogin, setIsLogin] = React.useState(true);
   const [showPassword, setShowPassword] = React.useState(false);
+  const [email,setEmail]= useState('');
+  const [password,setPassword]= useState("");
+  const [error,setError]= useState("");
+  // console.log(password);
+  // console.log(email);
+const authHandler = (event) =>{
+event.preventDefault();
+console.log(event.target.name);
+}
+
 
   return (
     <div className={styles.authContainer}>
       <div className={styles.authCard}>
-        {/* Add logo container here */}
         <div className={styles.logoContainer}>
           <img src={DessieMartLogo} alt="DessieMart Logo" className={styles.logo} />
           <h1 className={styles.brandName}>DessieMart</h1>
@@ -38,6 +48,8 @@ const Auth = () => {
               type="email"
               placeholder="Email"
               className={styles.authInput}
+              onChange={(e)=> setEmail(e.target.value)}
+              value={email}
             />
           </div>
 
@@ -47,6 +59,8 @@ const Auth = () => {
               type={showPassword ? "text" : "password"}
               placeholder="Password"
               className={styles.authInput}
+              value={password}
+              onChange={(e)=>setPassword(e.target.value)}
             />
             <button
               type="button"
@@ -57,7 +71,11 @@ const Auth = () => {
             </button>
           </div>
 
-          <button type="submit" className={styles.submitButton}>
+          <button 
+                 type="submit" 
+                 className={styles.submitButton}
+                 onClick={authHandler} 
+                 name={isLogin ? "signin" : "signup"}>
             {isLogin ? 'Sign In' : 'Register'}
           </button>
         </form>
@@ -68,7 +86,7 @@ const Auth = () => {
             onClick={() => setIsLogin(!isLogin)}
           >
             {isLogin
-              ? 'New to Dessie Mart? Create account'
+              ? 'New to DessieMart? Create account'
               : 'Already have an account? Sign in'}
           </button>
           <button className={styles.forgotPassword}>Forgot password?</button>
