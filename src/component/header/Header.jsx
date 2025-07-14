@@ -8,9 +8,9 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { DataContext } from '../dataProvider/DataProvider';
 import { ProductUrl } from '../../Api/EndPoint';
-
+import {auth} from '../../utility/firebase'
 const Header = () => {
-    const [{basket},dispatch] = useContext(DataContext);
+    const [{basket,user},dispatch] = useContext(DataContext);
     const totalItemInTheCart = basket?.reduce((amount,item)=>{
       return item.amount + amount
     },0)
@@ -69,11 +69,29 @@ const Header = () => {
           <span>ETH</span>
           <ArrowDropDownIcon />
         </div>
-        <Link to="/auth" className="link_account">
-              <div className="header__navItem">
-                <span className="small-text">Sign in </span>
-                <span className="bold-text">Account & Lists</span>
-              </div>
+        <Link to={!user && "/auth" } className="link_account">
+                {
+                  user? (<div className="header__navItem">
+                    <span className="small-text">
+                     Hello { user?.email?.split("@")[0]}
+                  </span>
+                  <span className="bold-text" onClick={()=>{
+                      auth.signOut();
+                  }}>Sign Out</span>
+                  </div>
+              ):(
+                <div className="header__navItem">
+                    <span className="small-text"> Hello Sign In</span>
+                    <span className="bold-text">Account & Lists</span> 
+                  </div>
+
+              )
+                }
+                {/* <span className="small-text">{
+                   user? ( `Hello ${ user?.email?.split("@")[0]}`):"Hello Sign In"
+                  } </span>
+                <span className="bold-text">Account & Lists</span> */}
+              
         </Link>
        
 

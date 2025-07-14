@@ -1,21 +1,59 @@
-import React,{useState} from 'react';
+import React,{useState,useContext} from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ClipLoader } from 'react-spinners';
 import styles from './Signup.module.css';
 import DessieMartLogo from '../../assets/image/DessieMartLogo.png'; 
 import { FcGoogle } from 'react-icons/fc';
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
 import {auth} from '../../utility/firebase'
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword} from 'firebase/auth';
+import {Type} from '../../utility/action.type'
+import {DataContext} from '../../component/dataProvider/DataProvider'
 const Auth = () => {
   const [isLogin, setIsLogin] = React.useState(true);
   const [showPassword, setShowPassword] = React.useState(false);
   const [email,setEmail]= useState('');
   const [password,setPassword]= useState("");
   const [error,setError]= useState("");
-  // console.log(password);
+  const [{user},dispatch] = useContext(DataContext)
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   // console.log(email);
-const authHandler = (event) =>{
-event.preventDefault();
-console.log(event.target.name);
-}
+  // console.log(user);
+  const authHandler = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+    setError("");
+
+    // Basic validation
+    if (!email || !password) {
+      setError("Please fill in all fields");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      if (event.target.name === "signin") {
+        const userInfo = await signInWithEmailAndPassword(auth, email, password);
+        dispatch({
+          type: Type.SET_USER,
+          user: userInfo.user
+        });
+        navigate('/'); // Redirect after login
+      } else {
+        const newUserInfo = await createUserWithEmailAndPassword(auth, email, password);
+        dispatch({
+          type: Type.SET_USER,
+          user: newUserInfo.user
+        });
+        navigate('/'); // Redirect after signup
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
 
   return (
@@ -70,14 +108,32 @@ console.log(event.target.name);
               {showPassword ? <FiEyeOff /> : <FiEye />}
             </button>
           </div>
-
-          <button 
-                 type="submit" 
-                 className={styles.submitButton}
-                 onClick={authHandler} 
-                 name={isLogin ? "signin" : "signup"}>
-            {isLogin ? 'Sign In' : 'Register'}
-          </button>
+            {/* create Error message  */}
+            {error && (
+                <div className={styles.errorMessage}>
+                  {error}
+                </div>
+          )}
+           <button 
+                  type="submit" 
+                  className={styles.submitButton}
+                  onClick={authHandler} 
+                  name={isLogin ? "signin" : "signup"}
+                  disabled={loading || !email || !password}
+                >
+                  {loading ? (
+                    <div className={styles.buttonContent}>
+                      <ClipLoader 
+                        color="#ffffff" 
+                        size={20} 
+                        cssOverride={{ marginRight: '8px' }} 
+                      />
+      
+                    </div>
+                  ) : (
+                    isLogin ? 'Sign In' : 'Register'
+                  )}
+           </button>
         </form>
 
         <div className={styles.authFooter}>

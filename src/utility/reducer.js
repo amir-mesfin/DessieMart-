@@ -2,7 +2,8 @@ import { useReducer } from 'react'
 import {Type} from './action.type'
 
 export const initialSate = {
-  basket:[]
+  basket:[],
+  user:null
 }
 
 export const reducer = (state, action) => {
@@ -53,12 +54,11 @@ export const reducer = (state, action) => {
               ...state,
               basket: newBasket
           };
-        // return {
-        //   ...state,
-        //   basket: state.basket.map(item =>
-        //     item.id === action.item.id ? {...item, amount: Math.max(1, item.amount - 1)} : item
-        //   )
-        // };
+    case Type.SET_USER :
+      return{
+         ...state,
+         user:action.user
+      }
       
     default:
       return state;
