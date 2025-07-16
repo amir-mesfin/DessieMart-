@@ -4,7 +4,8 @@ import { DataContext } from '../../component/dataProvider/DataProvider'
 import ProductCard from '../product/ProductCard';
 import { Link } from "react-router-dom";
 import styles from './Cart.module.css'
-import { ShoppingCartOutlined } from '@ant-design/icons'; // or any other icon library
+import { ShoppingCartOutlined } from '@ant-design/icons'
+import  UseTotalPrice from '../../component/currencyFormat/CurrencyFormat'
 import CurrencyFormat from '../../component/currencyFormat/CurrencyFormat';
 export default function Cart() {
   const [{basket, user}, dispatch] = useContext(DataContext);
@@ -48,7 +49,7 @@ export default function Cart() {
                 {/* Total: ${totalPrice.toFixed(2)} */}
                 <CurrencyFormat amount={totalPrice} />
               </div>
-              <Link to="/payment">
+              <Link to="/Payment">
               <button className={styles.checkoutButton}>
                 Proceed to Checkout
               </button>

@@ -1,0 +1,224 @@
+.paymentPage {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  margin-top: 133px;
+}
+
+.checkoutHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.checkoutHeader h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #2d3748;
+}
+
+.steps {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  color: #718096;
+}
+
+.activeStep {
+  color: #4f46e5;
+  font-weight: 600;
+}
+
+.currentStep {
+  color: #2d3748;
+  font-weight: 700;
+}
+
+.stepArrow {
+  color: #cbd5e0;
+}
+
+.mainContent {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 2rem;
+}
+
+.paymentSection {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+}
+
+.paymentSection h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #2d3748;
+}
+
+.paymentMethods {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.method {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.method:hover {
+  border-color: #c7d2fe;
+}
+
+.activeMethod {
+  border-color: #4f46e5;
+  background-color: #f5f3ff;
+}
+
+.methodIcon {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.cardForm {
+  margin-top: 2rem;
+}
+
+.cardPreview {
+  background: linear-gradient(135deg, #4f46e5, #8b5cf6);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.cardLogo {
+  align-self: flex-end;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.cardNumber {
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  font-family: monospace;
+}
+
+.cardDetails {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.formGroup input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.formGroup input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px #e9d5ff;
+}
+
+.formRow {
+  display: flex;
+  gap: 1rem;
+}
+
+.formRow .formGroup {
+  flex: 1;
+}
+
+.orderSummary {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+  align-self: start;
+  position: sticky;
+  top: 1rem;
+}
+
+.orderSummary h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #2d3748;
+}
+
+.summaryItem {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  color: #4a5568;
+}
+
+.divider {
+  height: 1px;
+  background: #e2e8f0;
+  margin: 1.5rem 0;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #2d3748;
+  margin: 1.5rem 0;
+}
+
+.payButton {
+  width: 100%;
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 1rem;
+}
+
+.payButton:hover {
+  background: #4338ca;
+}
+
+.securityNote {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+  color: #718096;
+}
