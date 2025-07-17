@@ -8,6 +8,11 @@ export default function Payment() {
   const totalItemInTheCart = basket?.reduce((amount,item)=>{
     return item.amount + amount
   },0)
+
+  const totalPrice = basket.reduce((sum, item) => { 
+    return sum + (item.price * item.amount)
+    },0)
+
   return (
     <LayOut>
       <div className={style.paymentPage}>
