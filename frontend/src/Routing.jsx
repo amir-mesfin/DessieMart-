@@ -10,21 +10,26 @@ import ProductDescription  from './pages/productDescription/ProductDescription'
 import InformationPage from './pages/information/InformationPage'
 import {CheckoutProvider} from '@stripe/react-stripe-js'
 import {loadStripe } from '@stripe/stripe-js'
+import CategoryPage from './pages/CategoryPage/CategoryPage'
+import ProductAddPage from './pages/productAdd/ProductAddPage'
 export default function Routing() {
-   const stripePromise = loadStripe('pk_test_51RklOiFhGzFLhj6jK5p50XPBIQKhbmwuSuM2jK1y4kRHqHgOZPtfqostytVkE7GWeDB0FEHDshq9Qp6kbRdeg4Cc00bMSPxnCr');
+
+   // const stripePromise = loadStripe('pk_test_51RklOiFhGzFLhj6jK5p50XPBIQKhbmwuSuM2jK1y4kRHqHgOZPtfqostytVkE7GWeDB0FEHDshq9Qp6kbRdeg4Cc00bMSPxnCr');
   return (
    <Router>
       <Routes>
          <Route path="/" element ={<Landing />} />
          <Route path="/auth" element ={<Auth />} />
-         <CheckoutProvider stripe={stripePromise} options={{fetchClientSecret}}>
+         {/* <CheckoutProvider stripe={stripePromise} options={{fetchClientSecret}}>
          <Route path="/payment" element ={<Payment />} />
-          </CheckoutProvider>
+          </CheckoutProvider> */}
          <Route path="/order" element ={<Order />} />
          <Route path="/cart" element ={<Cart />} />
          <Route path="/product/:categoryName" element={<Product />} />
          <Route path="/productDescriptions/:productId" element={ <ProductDescription />} />
          <Route path="/information" element={<InformationPage />} />
+         <Route path="/category"  element={<CategoryPage />} />
+         <Route path="/productAddPage"  element={<ProductAddPage />} />
       </Routes>
    </Router>
   )
