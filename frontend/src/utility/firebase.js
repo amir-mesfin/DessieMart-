@@ -1,4 +1,4 @@
-// src/firebase.js
+// src/utility/firebase.js
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
@@ -20,4 +20,4 @@ const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getFirestore(app); 
 
-export { auth, db }; 
+export { auth, db };

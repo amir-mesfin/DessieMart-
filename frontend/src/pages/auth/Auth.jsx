@@ -1,31 +1,31 @@
-import React,{useState,useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import styles from './Signup.module.css';
 import DessieMartLogo from '../../assets/image/DessieMartLogo.png'; 
 import { FcGoogle } from 'react-icons/fc';
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
-import {auth} from '../../utility/firebase'
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword} from 'firebase/auth';
-import {Type} from '../../utility/action.type'
-import {DataContext} from '../../component/dataProvider/DataProvider'
+import { auth, db } from '../../utility/firebase'; // add db
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc, getDoc } from 'firebase/firestore'; // add these
+import { Type } from '../../utility/action.type';
+import { DataContext } from '../../component/dataProvider/DataProvider';
+
 const Auth = () => {
   const [isLogin, setIsLogin] = React.useState(true);
   const [showPassword, setShowPassword] = React.useState(false);
-  const [email,setEmail]= useState('');
-  const [password,setPassword]= useState("");
-  const [error,setError]= useState("");
-  const [{user},dispatch] = useContext(DataContext)
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [{ user }, dispatch] = useContext(DataContext);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  // console.log(email);
-  // console.log(user);
+
   const authHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
     setError("");
 
-    // Basic validation
     if (!email || !password) {
       setError("Please fill in all fields");
       setLoading(false);
@@ -35,18 +35,33 @@ const Auth = () => {
     try {
       if (event.target.name === "signin") {
         const userInfo = await signInWithEmailAndPassword(auth, email, password);
+        // Fetch role from Firestore
+        const userDoc = await getDoc(doc(db, "users", userInfo.user.uid));
+        let role = "user"; // default role if missing
+        if (userDoc.exists()) {
+          role = userDoc.data().role;
+        }
+
+        // Store user + role in context
         dispatch({
           type: Type.SET_USER,
-          user: userInfo.user
+          user: { ...userInfo.user, role }
         });
-        navigate('/'); // Redirect after login
+        navigate('/');
       } else {
         const newUserInfo = await createUserWithEmailAndPassword(auth, email, password);
+
+        // Add user data to Firestore with default role
+        await setDoc(doc(db, "users", newUserInfo.user.uid), {
+          email: newUserInfo.user.email,
+          role: "user" // you can manually change this in Firestore to "admin" or "seller"
+        });
+
         dispatch({
           type: Type.SET_USER,
-          user: newUserInfo.user
+          user: { ...newUserInfo.user, role: "user" }
         });
-        navigate('/'); // Redirect after signup
+        navigate('/');
       }
     } catch (err) {
       setError(err.message);
@@ -55,7 +70,6 @@ const Auth = () => {
     }
   };
 
-
   return (
     <div className={styles.authContainer}>
       <div className={styles.authCard}>
@@ -63,7 +77,7 @@ const Auth = () => {
           <img src={DessieMartLogo} alt="DessieMart Logo" className={styles.logo} />
           <h1 className={styles.brandName}>DessieMart</h1>
         </div>
-        
+
         <h2 className={styles.authTitle}>
           {isLogin ? 'Sign In' : 'Create Account'}
         </h2>
@@ -86,7 +100,7 @@ const Auth = () => {
               type="email"
               placeholder="Email"
               className={styles.authInput}
-              onChange={(e)=> setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               value={email}
             />
           </div>
@@ -98,7 +112,7 @@ const Auth = () => {
               placeholder="Password"
               className={styles.authInput}
               value={password}
-              onChange={(e)=>setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <button
               type="button"
@@ -108,32 +122,32 @@ const Auth = () => {
               {showPassword ? <FiEyeOff /> : <FiEye />}
             </button>
           </div>
-            {/* create Error message  */}
-            {error && (
-                <div className={styles.errorMessage}>
-                  {error}
-                </div>
+
+          {error && (
+            <div className={styles.errorMessage}>
+              {error}
+            </div>
           )}
-           <button 
-                  type="submit" 
-                  className={styles.submitButton}
-                  onClick={authHandler} 
-                  name={isLogin ? "signin" : "signup"}
-                  disabled={loading || !email || !password}
-                >
-                  {loading ? (
-                    <div className={styles.buttonContent}>
-                      <ClipLoader 
-                        color="#ffffff" 
-                        size={20} 
-                        cssOverride={{ marginRight: '8px' }} 
-                      />
-      
-                    </div>
-                  ) : (
-                    isLogin ? 'Sign In' : 'Register'
-                  )}
-           </button>
+
+          <button
+            type="submit"
+            className={styles.submitButton}
+            onClick={authHandler}
+            name={isLogin ? "signin" : "signup"}
+            disabled={loading || !email || !password}
+          >
+            {loading ? (
+              <div className={styles.buttonContent}>
+                <ClipLoader
+                  color="#ffffff"
+                  size={20}
+                  cssOverride={{ marginRight: '8px' }}
+                />
+              </div>
+            ) : (
+              isLogin ? 'Sign In' : 'Register'
+            )}
+          </button>
         </form>
 
         <div className={styles.authFooter}>
