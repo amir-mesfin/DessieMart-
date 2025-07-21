@@ -5,9 +5,9 @@ import styles from './Signup.module.css';
 import DessieMartLogo from '../../assets/image/DessieMartLogo.png'; 
 import { FcGoogle } from 'react-icons/fc';
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
-import { auth, db } from '../../utility/firebase'; // add db
+import { auth, db } from '../../utility/firebase';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
-import { doc, setDoc, getDoc } from 'firebase/firestore'; // add these
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { Type } from '../../utility/action.type';
 import { DataContext } from '../../component/dataProvider/DataProvider';
 
@@ -35,9 +35,10 @@ const Auth = () => {
     try {
       if (event.target.name === "signin") {
         const userInfo = await signInWithEmailAndPassword(auth, email, password);
+        
         // Fetch role from Firestore
         const userDoc = await getDoc(doc(db, "users", userInfo.user.uid));
-        let role = "user"; // default role if missing
+        let role = "user"; // default role
         if (userDoc.exists()) {
           role = userDoc.data().role;
         }
@@ -47,14 +48,23 @@ const Auth = () => {
           type: Type.SET_USER,
           user: { ...userInfo.user, role }
         });
-        navigate('/');
+
+        // ✅ NEW: Navigate based on role
+        if (role === "admin") {
+          navigate('/admin');
+        } else if (role === "seller") {
+          navigate('/seller');
+        } else {
+          navigate('/');
+        }
+
       } else {
         const newUserInfo = await createUserWithEmailAndPassword(auth, email, password);
 
         // Add user data to Firestore with default role
         await setDoc(doc(db, "users", newUserInfo.user.uid), {
           email: newUserInfo.user.email,
-          role: "user" // you can manually change this in Firestore to "admin" or "seller"
+          role: "user"
         });
 
         dispatch({

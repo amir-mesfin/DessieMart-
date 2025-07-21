@@ -7,11 +7,7 @@ export const createCategory = async (req, res) => {
   try {
     const { name, description } = req.body;
 
-    // Validate input
-    if (!name) {
-      return res.status(400).json({ message: 'Category name is required' });
-    }
-
+  
     // Check if category already exists
     const existingCategory = await Category.findOne({ name });
     if (existingCategory) {
