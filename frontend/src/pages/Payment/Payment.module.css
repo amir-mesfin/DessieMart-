@@ -222,3 +222,34 @@
   font-size: 0.8rem;
   color: #718096;
 }
+/* Add these to your existing CSS */
+
+.cardElementContainer {
+  padding: 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+}
+
+.cardElementContainer:hover {
+  border-color: #c7d2fe;
+}
+
+.cardElementContainer--focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px #e9d5ff;
+}
+
+.errorMessage {
+  color: #e53e3e;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background-color: #fff5f5;
+  border-radius: 4px;
+}
+
+.payButton:disabled {
+  background-color: #a0aec0;
+  cursor: not-allowed;
+}

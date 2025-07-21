@@ -1,17 +1,100 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import LayOut from '../layOut/LayOut';
 import style from './Payment.module.css';
 import { DataContext } from '../../component/dataProvider/DataProvider';
+import {
+  useStripe, 
+  useElements, 
+  CardElement
+} from '@stripe/react-stripe-js';
+import { useNavigate } from 'react-router-dom';
 
 export default function Payment() {
-  const [{user,basket},dispatch] = useContext(DataContext);
-  const totalItemInTheCart = basket?.reduce((amount,item)=>{
+  const [{ user, basket }, dispatch] = useContext(DataContext);
+  const [processing, setProcessing] = useState(false);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  
+  const totalItemInTheCart = basket?.reduce((amount, item) => {
     return item.amount + amount
-  },0)
+  }, 0);
 
   const totalPrice = basket.reduce((sum, item) => { 
-    return sum + (item.price * item.amount)
-    },0)
+    return sum + (item.price * item.amount);
+  }, 0);
+
+  const stripe = useStripe();
+  const elements = useElements();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    
+    if (!stripe || !elements) {
+      return;
+    }
+
+    setProcessing(true);
+    setError(null);
+
+    try {
+      const { error: stripeError, paymentMethod } = await stripe.createPaymentMethod({
+        type: 'card',
+        card: elements.getElement(CardElement),
+      });
+
+      if (stripeError) {
+        setError(stripeError.message);
+        setProcessing(false);
+        return;
+      }
+
+      // Here you would typically send the paymentMethod.id to your backend
+      // to complete the payment. For example:
+      // const response = await fetch('/api/payment', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({
+      //     paymentMethodId: paymentMethod.id,
+      //     amount: totalPrice * 100, // amount in cents
+      //     currency: 'usd',
+      //   }),
+      // });
+
+      // For demo purposes, we'll just simulate a successful payment
+      console.log('PaymentMethod:', paymentMethod);
+      setTimeout(() => {
+        setProcessing(false);
+        // Clear the cart after successful payment
+        dispatch({ type: 'EMPTY_BASKET' });
+        // Navigate to success page
+        navigate('/payment-success');
+      }, 1500);
+      
+    } catch (err) {
+      setError(err.message);
+      setProcessing(false);
+    }
+  };
+
+  const CARD_OPTIONS = {
+    style: {
+      base: {
+        color: '#32325d',
+        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontSmoothing: 'antialiased',
+        fontSize: '16px',
+        '::placeholder': {
+          color: '#aab7c4'
+        }
+      },
+      invalid: {
+        color: '#fa755a',
+        iconColor: '#fa755a'
+      }
+    }
+  };
 
   return (
     <LayOut>
@@ -39,48 +122,23 @@ export default function Payment() {
                 <div className={style.methodIcon}>💳</div>
                 <span>Credit Card</span>
               </div>
-              <div className={style.method}>
-                <div className={style.methodIcon}>📱</div>
-                <span>Mobile Payment</span>
-              </div>
-              <div className={style.method}>
-                <div className={style.methodIcon}>P</div>
-                <span>PayPal</span>
-              </div>
             </div>
 
             {/* Credit Card Form */}
             <div className={style.cardForm}>
-              <div className={style.cardPreview}>
-                <div className={style.cardLogo}>VISA</div>
-                <div className={style.cardNumber}>•••• •••• •••• 4242</div>
-                <div className={style.cardDetails}>
-                  <span>JOHN DOE</span>
-                  <span>12/25</span>
-                </div>
-              </div>
-
-              <form className={style.form}>
+              <form onSubmit={handleSubmit} className={style.form}>
                 <div className={style.formGroup}>
-                  <label>Card Number</label>
-                  <input type="text" placeholder="1234 5678 9012 3456" />
-                </div>
-
-                <div className={style.formGroup}>
-                  <label>Cardholder Name</label>
-                  <input type="text" placeholder="John Doe" />
-                </div>
-
-                <div className={style.formRow}>
-                  <div className={style.formGroup}>
-                    <label>Expiry Date</label>
-                    <input type="text" placeholder="MM/YY" />
-                  </div>
-                  <div className={style.formGroup}>
-                    <label>CVV</label>
-                    <input type="text" placeholder="123" />
+                  <label>Card Details</label>
+                  <div className={style.cardElementContainer}>
+                    <CardElement options={CARD_OPTIONS} />
                   </div>
                 </div>
+
+                {error && (
+                  <div className={style.errorMessage}>
+                    {error}
+                  </div>
+                )}
               </form>
             </div>
           </div>
@@ -89,10 +147,12 @@ export default function Payment() {
           <div className={style.orderSummary}>
             <h2>Order Summary</h2>
             
-            <div className={style.summaryItem}>
-              <span>Premium Headphones</span>
-              <span>$199.99</span>
-            </div>
+            {basket.map(item => (
+              <div key={item.id} className={style.summaryItem}>
+                <span>{item.title} (x{item.amount})</span>
+                <span>${(item.price * item.amount).toFixed(2)}</span>
+              </div>
+            ))}
             
             <div className={style.summaryItem}>
               <span>Shipping</span>
@@ -101,17 +161,23 @@ export default function Payment() {
             
             <div className={style.summaryItem}>
               <span>Tax</span>
-              <span>$14.00</span>
+              <span>${(totalPrice * 0.1).toFixed(2)}</span>
             </div>
             
             <div className={style.divider}></div>
             
             <div className={style.total}>
               <span>Total</span>
-              <span>$213.99</span>
+              <span>${(totalPrice * 1.1).toFixed(2)}</span>
             </div>
             
-            <button className={style.payButton}>Pay Now</button>
+            <button 
+              className={style.payButton} 
+              onClick={handleSubmit}
+              disabled={!stripe || processing}
+            >
+              {processing ? 'Processing...' : 'Pay Now'}
+            </button>
             
             <div className={style.securityNote}>
               <span>🔒 Secure payment</span>
