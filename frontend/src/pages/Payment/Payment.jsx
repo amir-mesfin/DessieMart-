@@ -8,6 +8,8 @@ import {
   CardElement
 } from '@stripe/react-stripe-js';
 import { useNavigate } from 'react-router-dom';
+import api from '../../Api/axiosConfig'
+import ClipLoader from 'react-spinners/ClipLoader';
 
 export default function Payment() {
   const [{ user, basket }, dispatch] = useContext(DataContext);
@@ -28,7 +30,6 @@ export default function Payment() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
     if (!stripe || !elements) {
       return;
     }
@@ -36,17 +37,37 @@ export default function Payment() {
     setProcessing(true);
     setError(null);
 
-    try {
-      const { error: stripeError, paymentMethod } = await stripe.createPaymentMethod({
-        type: 'card',
-        card: elements.getElement(CardElement),
-      });
+     try{
 
-      if (stripeError) {
-        setError(stripeError.message);
+      // contact the client secrete 
+         const response = await api.post('/payment/create', { total: totalPrice });
+         console.log(response.data);
+         const clientSecrete=response.data.clientSecret;
+      // client side conformation
+         console.log(clientSecrete)
+
+        const conformation = await stripe.confirmCardPayment(
+          clientSecrete,
+          {
+              payment_method:{
+                card: elements.getElement(CardElement)
+            }
+          }
+        )
+        console.log(conformation);
         setProcessing(false);
-        return;
-      }
+      
+          if (stripeError) {
+          setError(stripeError.message);
+          return;
+          }
+
+     }catch(err){
+      console.log(err);
+      setProcessing(false);
+      
+     }
+    
 
       // Here you would typically send the paymentMethod.id to your backend
       // to complete the payment. For example:
@@ -62,20 +83,20 @@ export default function Payment() {
       //   }),
       // });
 
-      // For demo purposes, we'll just simulate a successful payment
-      console.log('PaymentMethod:', paymentMethod);
-      setTimeout(() => {
-        setProcessing(false);
-        // Clear the cart after successful payment
-        dispatch({ type: 'EMPTY_BASKET' });
-        // Navigate to success page
-        navigate('/payment-success');
-      }, 1500);
+    //   // For demo purposes, we'll just simulate a successful payment
+    //   console.log('PaymentMethod:', paymentMethod);
+    //   setTimeout(() => {
+    //     setProcessing(false);
+    //     // Clear the cart after successful payment
+    //     dispatch({ type: 'EMPTY_BASKET' });
+    //     // Navigate to success page
+    //     navigate('/payment-success');
+    //   }, 1500);
       
-    } catch (err) {
-      setError(err.message);
-      setProcessing(false);
-    }
+    // } catch (err) {
+    //   setError(err.message);
+    //   setProcessing(false);
+    // }
   };
 
   const CARD_OPTIONS = {
@@ -176,7 +197,7 @@ export default function Payment() {
               onClick={handleSubmit}
               disabled={!stripe || processing}
             >
-              {processing ? 'Processing...' : 'Pay Now'}
+              {processing ? <ClipLoader  color="white" size={14} />  : 'Pay Now'}
             </button>
             
             <div className={style.securityNote}>
