@@ -13,11 +13,13 @@ export const PaymentSuccess = async(req,res)=>{
 
 
 export const PaymentCreate = async(req,res)=>{
-      const total = parseInt(req.query.total);
+      const total = parseInt(req.body.total);
+      
       console.log(total);
 
       if (total > 0) {
         console.log("payment received ", total);
+
         
             try {
               const paymentIntent = await stripe.paymentIntents.create({
