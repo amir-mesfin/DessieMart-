@@ -13,17 +13,18 @@ export const PaymentSuccess = async(req,res)=>{
 
 
 export const PaymentCreate = async(req,res)=>{
-      const total = parseInt(req.body.total);
+      const amountInDollars = parseInt(req.body.total);
       
-      console.log(total);
+      console.log(amountInDollars);
 
-      if (total > 0) {
-        console.log("payment received ", total);
-
+      if (amountInDollars > 0) {
+        console.log("payment received ", amountInDollars);
+        const amountInCents = Math.round(amountInDollars * 100);
+        
         
             try {
               const paymentIntent = await stripe.paymentIntents.create({
-                amount: total, // subunits of currency
+                amount: amountInCents, // subunits of currency
                 currency: "usd",
               });
               
