@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import styles from './Signup.module.css';
 import DessieMartLogo from '../../assets/image/DessieMartLogo.png'; 
@@ -20,6 +20,9 @@ const Auth = () => {
   const [{ user }, dispatch] = useContext(DataContext);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const navStateData =  useLocation();
+  // console.log(navStateData.state);
 
   const authHandler = async (event) => {
     event.preventDefault();
@@ -55,7 +58,7 @@ const Auth = () => {
         } else if (role === "seller") {
           navigate('/seller');
         } else {
-          navigate('/');
+          navigate(navStateData?.state?.redirect||"/");
         }
 
       } else {
@@ -79,13 +82,25 @@ const Auth = () => {
       setLoading(false);
     }
   };
-
+ 
   return (
     <div className={styles.authContainer}>
       <div className={styles.authCard}>
         <div className={styles.logoContainer}>
           <img src={DessieMartLogo} alt="DessieMart Logo" className={styles.logo} />
           <h1 className={styles.brandName}>DessieMart</h1>
+          {
+             navStateData?.state?.msg && (
+                <small  
+                  style = {{
+                       padding:"12px",
+                       textAlign:"center",
+                       color:"red",
+                       frontWeight:"bold"
+                  }}  
+                  >  {navStateData?.state?.msg} </small>
+             )
+          }
         </div>
 
         <h2 className={styles.authTitle}>

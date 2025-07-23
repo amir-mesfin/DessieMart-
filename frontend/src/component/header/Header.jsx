@@ -39,7 +39,9 @@ const Header = () => {
     <header className="header">
       {/* Logo & Deliver */}
       <div className="header__left">
-        <img src={logo} alt="DessieMart Logo" className="header__logo" />
+        <Link to="/"> 
+          <img src={logo} alt="DessieMart Logo" className="header__logo" /> 
+         </Link>
         <div className="header__location">
           <LocationOnIcon />
           <div>
@@ -87,18 +89,17 @@ const Header = () => {
 
               )
                 }
-                {/* <span className="small-text">{
-                   user? ( `Hello ${ user?.email?.split("@")[0]}`):"Hello Sign In"
-                  } </span>
-                <span className="bold-text">Account & Lists</span> */}
+                
               
         </Link>
        
-
+        <Link className="cart_Link" to="/order">
         <div className="header__navItem">
-          <span className="small-text">Returns</span>
-          <span className="bold-text">& Orders</span>
-        </div>
+            <span className="small-text">Returns</span>
+            <span className="bold-text">& Orders</span>
+          </div>
+        </Link>
+    
         <Link  className="cart_Link" to="/cart" >
             <div className="header__cart">
             <ShoppingCartIcon style={{ color: "white" }} />

@@ -64,11 +64,11 @@ export default function Payment() {
             setProcessing(false);
             return;
           }
-         console.log(paymentIntent);
-         console.log(user.uid);
-         console.log(paymentIntent.id);
-         console.log(paymentIntent.amount);
-         console.log(paymentIntent.created);
+        //  console.log(paymentIntent);
+        //  console.log(user.uid);
+        //  console.log(paymentIntent.id);
+        //  console.log(paymentIntent.amount);
+        //  console.log(paymentIntent.created);
          try {
             const orderDocRef = doc(db, "customer", user.uid, "order", paymentIntent.id);
             await setDoc(orderDocRef, {
