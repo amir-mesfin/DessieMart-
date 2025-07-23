@@ -10,7 +10,9 @@ import {
 import { useNavigate } from 'react-router-dom';
 import api from '../../Api/axiosConfig'
 import ClipLoader from 'react-spinners/ClipLoader';
-
+import {db} from '../../utility/firebase'
+import create from '@ant-design/icons/lib/components/IconFont';
+import { doc, setDoc } from "firebase/firestore";
 export default function Payment() {
   const [{ user, basket }, dispatch] = useContext(DataContext);
   const [processing, setProcessing] = useState(false);
@@ -41,26 +43,49 @@ export default function Payment() {
 
       // contact the client secrete 
          const response = await api.post('/payment/create', { total: totalPrice });
-         console.log(response.data);
-         const clientSecrete=response.data.clientSecret;
+        //  console.log(total);
+        //  console.log(response.data);
+         const clientSecret=response.data.clientSecret;
       // client side conformation
-         console.log(clientSecrete)
+       console.log("Received clientSecret:", clientSecret)
 
-        const conformation = await stripe.confirmCardPayment(
-          clientSecrete,
-          {
-              payment_method:{
-                card: elements.getElement(CardElement)
-            }
+         const { paymentIntent, error: stripeError } = await stripe.confirmCardPayment(
+          clientSecret,
+                    {
+                      payment_method: {
+                        card: elements.getElement(CardElement)
+                      }
+                    }
+          );
+
+          if (stripeError) {
+            console.error("Stripe confirm error:", stripeError);
+            setError(stripeError.message);
+            setProcessing(false);
+            return;
           }
-        )
-        console.log(conformation);
+         console.log(paymentIntent);
+         console.log(user.uid);
+         console.log(paymentIntent.id);
+         console.log(paymentIntent.amount);
+         console.log(paymentIntent.created);
+         try {
+            const orderDocRef = doc(db, "customer", user.uid, "order", paymentIntent.id);
+            await setDoc(orderDocRef, {
+              basket,
+              amount: paymentIntent.amount,
+              created: paymentIntent.created
+            });
+          console.log("✅ Order saved to Firestore!");
+        } catch (firebaseError) {
+          console.error("❌ Error saving order to Firestore:", firebaseError);
+          setError("Error saving order to your order history. Please contact support.");
+        }
+        
+
+    
         setProcessing(false);
       
-          if (stripeError) {
-          setError(stripeError.message);
-          return;
-          }
 
      }catch(err){
       console.log(err);
