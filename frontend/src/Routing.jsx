@@ -15,7 +15,8 @@ import AdminDashboard from './pages/dashboard/AdminDashboard'
 import SellerDashboard from './pages/dashboard/SellerDashboard'
 import {Elements} from '@stripe/react-stripe-js';
 import ProtectedRouteP from './component/protectedRoute/ProtectedRouteP'
-import {loadStripe} from '@stripe/stripe-js';
+import {loadStripe} from '@stripe/stripe-js'
+import AllProduct from './pages/allProduct/AllProduct'
 export default function Routing() {
    const stripePromise = loadStripe('pk_test_51RklOiFhGzFLhj6jK5p50XPBIQKhbmwuSuM2jK1y4kRHqHgOZPtfqostytVkE7GWeDB0FEHDshq9Qp6kbRdeg4Cc00bMSPxnCr');
   return (
@@ -28,7 +29,7 @@ export default function Routing() {
           <Route 
                   path="/payment"
                   element={
-                     <ProtectedRouteP msg="you must login to pay" redirect="/payment">
+                     <ProtectedRouteP msg="you must login to pay"  redirect="/payment">
                               <Elements stripe={stripePromise}>
                                        <Payment />
                               </Elements>
@@ -70,6 +71,9 @@ export default function Routing() {
                </ProtectedRoute>
             }
          />
+         <Route 
+              path="/all_product"
+              element={ <AllProduct />}  />
       </Routes>
    </Router>
   )
