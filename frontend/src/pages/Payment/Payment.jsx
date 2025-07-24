@@ -13,6 +13,7 @@ import ClipLoader from 'react-spinners/ClipLoader';
 import {db} from '../../utility/firebase'
 import create from '@ant-design/icons/lib/components/IconFont';
 import { doc, setDoc } from "firebase/firestore";
+import { Type } from '../../utility/action.type';
 export default function Payment() {
   const [{ user, basket }, dispatch] = useContext(DataContext);
   const [processing, setProcessing] = useState(false);
@@ -82,7 +83,7 @@ export default function Payment() {
           setError("Error saving order to your order history. Please contact support.");
         }
         
-     
+        dispatch({type:Type.EMPTY_BASKET});
         setProcessing(false);
         navigate("/order");
       
