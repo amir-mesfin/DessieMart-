@@ -4,9 +4,12 @@ import style from './Information.module.css'
 import UseTotalPrice from '../../component/currencyFormat/UseTotalPrice'
 import { DataContext } from '../../component/dataProvider/DataProvider'
 import { Link } from "react-router-dom"
+import { db } from '../../utility/firebase'
+import { collection, addDoc, Timestamp } from "firebase/firestore";
+import LayOut from '../layOut/LayOut'
 
 export default function InformationPage({ nextStep, products }) {
-
+  
   const [{basket, user}, dispatch] = useContext(DataContext);
   const [formData, setFormData] = useState({
     email: '',
@@ -66,23 +69,36 @@ export default function InformationPage({ nextStep, products }) {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
       setIsSubmitting(true);
+  
+      try {
+        await addDoc(collection(db, "customer", user.uid, "information"), {
+          ...formData,            
+          created: Timestamp.now() 
+        });
+        console.log("Form data saved successfully!");
+      } catch (err) {
+        console.error("Error saving form data:", err);
+      }
+  
       setTimeout(() => {
         setIsSubmitting(false);
-        nextStep(formData); // Pass data to payment step
+        nextStep(formData); // Continue to next step
       }, 1500);
     }
   };
-
+  
   // total calculation
   const subtotal = UseTotalPrice();
   const shippingCost = formData.shipping === 'standard' ? 0 : 9.99;
   const total = (subtotal + shippingCost - discount).toFixed(2);
 
   return (
+
+    <LayOut>
     <motion.div 
       className={style.informationPage}
       initial={{ opacity: 0 }}
@@ -282,7 +298,7 @@ export default function InformationPage({ nextStep, products }) {
             </label>
             {errors.agreeTerms && <span className={style.errorMessage}>{errors.agreeTerms}</span>}
           </div>
-
+        <Link to="/payment" >
           <motion.button
             type="submit"
             className={style.continueButton}
@@ -292,6 +308,7 @@ export default function InformationPage({ nextStep, products }) {
           >
             {isSubmitting ? <span className={style.spinner}></span> : 'Continue to Payment'}
           </motion.button>
+          </Link>
         </motion.form>
 
         <motion.div 
@@ -301,14 +318,7 @@ export default function InformationPage({ nextStep, products }) {
           transition={{ delay: 0.3 }}
         >
           <h3>Your Order</h3>
-          <ul>
-            {basket?.slice(0).map((item) => (
-              <li key={item.id}>
-                <span>{item.name} × {item.quantity}</span>
-                <span>${(item.price * item.quantity).toFixed(2)}</span>
-              </li>
-            ))}
-          </ul>
+         
           <div className={style.summaryDivider}></div>
           <div className={style.summaryRow}>
             <span>Subtotal</span>
@@ -338,5 +348,8 @@ export default function InformationPage({ nextStep, products }) {
         </motion.div>
       </div>
     </motion.div>
+  </LayOut>
+
   );
+  
 }

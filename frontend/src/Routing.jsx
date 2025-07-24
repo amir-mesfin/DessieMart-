@@ -74,7 +74,13 @@ export default function Routing() {
          <Route 
               path="/all_product"
               element={ <AllProduct />}  />
-      </Routes>
+
+        <Route  path="/information"
+                element={
+                   <InformationPage />
+                }   />
+      </Routes>  
+
    </Router>
   )
 }

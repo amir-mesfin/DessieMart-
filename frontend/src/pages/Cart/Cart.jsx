@@ -49,7 +49,7 @@ export default function Cart() {
                 {/* Total: ${totalPrice.toFixed(2)} */}
                 <CurrencyFormat amount={totalPrice} />
               </div>
-              <Link to="/Payment">
+              <Link to="/information">
               <button className={styles.checkoutButton}>
                 Proceed to Checkout
               </button>

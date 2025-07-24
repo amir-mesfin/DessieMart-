@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import './header.css';
 import { Link } from "react-router-dom";
 import logo from '../../assets/image/DessieMartLogo.png';
-import SearchIcon from '@mui/icons-material/Search';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { DataContext } from '../dataProvider/DataProvider';
-import { ProductUrl } from '../../Api/EndPoint';
+import SearchIcon from '@mui/icons-material/Search'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import LocationOnIcon from '@mui/icons-material/LocationOn'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
+import { DataContext } from '../dataProvider/DataProvider'
+import { ProductUrl } from '../../Api/EndPoint'
 import {auth} from '../../utility/firebase'
 const Header = () => {
     const [{basket,user},dispatch] = useContext(DataContext);
@@ -39,7 +39,7 @@ const Header = () => {
     <header className="header">
       {/* Logo & Deliver */}
       <div className="header__left">
-        <Link to="/"> 
+        <Link className='header_img' to="/"> 
           <img src={logo} alt="DessieMart Logo" className="header__logo" /> 
          </Link>
         <div className="header__location">
