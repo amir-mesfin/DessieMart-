@@ -7,27 +7,27 @@ import {
   useElements, 
   CardElement
 } from '@stripe/react-stripe-js';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import api from '../../Api/axiosConfig'
 import ClipLoader from 'react-spinners/ClipLoader';
 import {db} from '../../utility/firebase'
-import create from '@ant-design/icons/lib/components/IconFont';
 import { doc, setDoc } from "firebase/firestore";
 import { Type } from '../../utility/action.type';
 export default function Payment() {
-  const [{ user, basket }, dispatch] = useContext(DataContext);
+  const [{ user, basket, fast_buy }, dispatch] = useContext(DataContext);
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  
-  const totalItemInTheCart = basket?.reduce((amount, item) => {
+  const location = useLocation();
+  let { checking } = location.state || false; 
+  const totalItemInTheCart =  checking? "one":(basket?.reduce((amount, item) => {
     return item.amount + amount
-  }, 0);
+  }, 0))
 
-  const totalPrice = basket.reduce((sum, item) => { 
+  const totalPrice =checking? fast_buy[0].price :(basket.reduce((sum, item) => { 
     return sum + (item.price * item.amount);
-  }, 0);
-
+  }, 0))
+// console.log(fast_buy);
   const stripe = useStripe();
   const elements = useElements();
 
@@ -73,7 +73,7 @@ export default function Payment() {
          try {
             const orderDocRef = doc(db, "customer", user.uid, "order", paymentIntent.id);
             await setDoc(orderDocRef, {
-              basket,
+              basket: checking? fast_buy : basket,
               amount: paymentIntent.amount,
               created: paymentIntent.created
             });
@@ -83,7 +83,13 @@ export default function Payment() {
           setError("Error saving order to your order history. Please contact support.");
         }
         
-        dispatch({type:Type.EMPTY_BASKET});
+
+        if(checking){
+          checking=false;
+        }else{
+          dispatch({type:Type.EMPTY_BASKET});
+        }
+           
         setProcessing(false);
         navigate("/order");
       
@@ -165,12 +171,19 @@ export default function Payment() {
           <div className={style.orderSummary}>
             <h2>Order Summary</h2>
             
-            {basket.map(item => (
-              <div key={item.id} className={style.summaryItem}>
-                <span>{item.title} (x{item.amount})</span>
-                <span>${(item.price * item.amount).toFixed(2)}</span>
-              </div>
-            ))}
+           {checking?(
+                <div className={style.summaryItem}>
+                  <span>{fast_buy[0].title} (x{1})</span>
+                  <span>${fast_buy[0].price.toFixed(2)}</span>
+                </div>
+                ) : (
+                  basket.map(item => (
+                    <div key={item.id} className={style.summaryItem}>
+                      <span>{item.title} (x{item.amount})</span>
+                      <span>${(item.price * item.amount).toFixed(2)}</span>
+                    </div>
+                  ))
+             )}
             
             <div className={style.summaryItem}>
               <span>Shipping</span>

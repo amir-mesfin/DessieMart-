@@ -3,7 +3,8 @@ import {Type} from './action.type'
 
 export const initialSate = {
   basket:[],
-  user:null
+  user:null,
+  fast_buy:[]
 }
 
 export const reducer = (state, action) => {
@@ -64,6 +65,13 @@ export const reducer = (state, action) => {
          ...state,
          basket:[],
       }
+    case Type.FAST_BUY :
+       return{
+         ...state,
+         fast_buy:[action.item]
+
+       }
+      
     default:
       return state;
   }

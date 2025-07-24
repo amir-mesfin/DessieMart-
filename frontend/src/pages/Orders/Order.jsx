@@ -32,7 +32,7 @@ export default function Order() {
       setLoading(false);
     }
   }, [user]);
-
+   console.log(orders);
   const formatDate = (timestamp) => {
     try {
       if (!timestamp) return 'Date not available';

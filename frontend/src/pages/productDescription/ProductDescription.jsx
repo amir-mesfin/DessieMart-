@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom';
 import FadeLoaderComponent from "../../component/Loader/FadeLoaderComponent";
 import { DataContext } from "../../component/dataProvider/DataProvider";
 import { Type } from '../../utility/action.type';
-
+import { Link } from "react-router-dom";
 
 function ProductDescription() {
   const location = useLocation();
@@ -22,6 +22,7 @@ function ProductDescription() {
   const ProductCart = location.state?.cartDescription;
   const {isCartItems} = ProductCart || {};
   const [state, dispatch] = useContext(DataContext);
+  const fastBool = true ;
    
   useEffect(() => {
     const fetchSingleProductById = async () => {
@@ -101,7 +102,12 @@ function ProductDescription() {
       item: singleProduct
     });
   };
-
+const fastBuy = ()=>{
+  dispatch({
+    type: Type.FAST_BUY,
+    item: singleProduct
+  });
+}
   return ( 
     <LayOut>
       <div className={styles.productContainer}>
@@ -182,12 +188,15 @@ function ProductDescription() {
               >
                 Add to Cart
               </button>
-              <button
-                className={styles.buyNow}
-                disabled={stock <= 0}
-              >
-                Buy Now
-              </button>
+              <Link to="/Payment" state={{checking:fastBool}}>
+                  <button
+                    className={styles.buyNow}
+                    disabled={stock <= 0}
+                    onClick={fastBuy}
+                  >
+                    Buy Now
+                  </button>
+              </Link>
             </div>
           )}
         </div>

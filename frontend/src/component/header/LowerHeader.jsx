@@ -1,8 +1,12 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import './LowerHeader.css';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
+import { DataContext } from '../dataProvider/DataProvider';
+import { auth } from '../../utility/firebase';
+
 const LowerHeader = () => {
+  const [{user}]=useContext(DataContext);
   return (
     <div className="lower-header">
       <div className="lower-header__content">
@@ -19,9 +23,14 @@ const LowerHeader = () => {
           <div  className="lower-header__item">
           Customer Service
           </div>
+          <Link className="Link_css" to={!user&&"/auth"}>
           <div  className="lower-header__item">
-          Registry
+               {user?( <span onClick={()=>{
+                   auth.signOut();
+               }}>Sign Out</span>):(<span>Registry</span>)}
           </div>
+          </Link>
+        
           <div  className="lower-header__item">
           Gift Cards
           </div>
