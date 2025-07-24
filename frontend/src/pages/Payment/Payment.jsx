@@ -76,15 +76,15 @@ export default function Payment() {
               amount: paymentIntent.amount,
               created: paymentIntent.created
             });
-          console.log("✅ Order saved to Firestore!");
+          // console.log(" Order saved to Firestore!");
         } catch (firebaseError) {
           console.error("❌ Error saving order to Firestore:", firebaseError);
           setError("Error saving order to your order history. Please contact support.");
         }
         
-
-    
+     
         setProcessing(false);
+        navigate("/order");
       
 
      }catch(err){
@@ -93,35 +93,6 @@ export default function Payment() {
       
      }
     
-
-      // Here you would typically send the paymentMethod.id to your backend
-      // to complete the payment. For example:
-      // const response = await fetch('/api/payment', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     paymentMethodId: paymentMethod.id,
-      //     amount: totalPrice * 100, // amount in cents
-      //     currency: 'usd',
-      //   }),
-      // });
-
-    //   // For demo purposes, we'll just simulate a successful payment
-    //   console.log('PaymentMethod:', paymentMethod);
-    //   setTimeout(() => {
-    //     setProcessing(false);
-    //     // Clear the cart after successful payment
-    //     dispatch({ type: 'EMPTY_BASKET' });
-    //     // Navigate to success page
-    //     navigate('/payment-success');
-    //   }, 1500);
-      
-    // } catch (err) {
-    //   setError(err.message);
-    //   setProcessing(false);
-    // }
   };
 
   const CARD_OPTIONS = {

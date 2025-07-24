@@ -1,0 +1,383 @@
+.orderSection {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 70vh;
+}
+
+.orderContainer {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  padding: 30px;
+  margin-top: 100px;
+}
+
+.orderTitle {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #2d3748;
+  text-align: center;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.orderTitle::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  border-radius: 2px;
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid #667eea;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.emptyOrders {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.emptyImage {
+  width: 200px;
+  height: auto;
+  margin-bottom: 20px;
+  opacity: 0.7;
+}
+
+.emptyOrders h3 {
+  font-size: 22px;
+  color: #4a5568;
+  margin-bottom: 10px;
+}
+
+.emptyOrders p {
+  color: #718096;
+  font-size: 16px;
+}
+
+.orderList {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.orderCard {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.orderCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.orderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.orderLabel {
+  font-size: 14px;
+  color: #718096;
+  margin-right: 8px;
+}
+
+.orderId {
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.orderDate {
+  font-size: 14px;
+  color: #4a5568;
+}
+
+.orderStatus {
+  padding: 8px 20px;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-block;
+  border-radius: 20px;
+  margin: 15px;
+}
+
+.orderItems {
+  padding: 0 20px;
+}
+
+.orderItem {
+  display: flex;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.orderItem:last-child {
+  border-bottom: none;
+}
+
+.itemImage {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  border-radius: 8px;
+  margin-right: 15px;
+  background-color: #f8fafc;
+  padding: 5px;
+  border: 1px solid #e2e8f0;
+}
+
+.itemDetails {
+  flex: 1;
+}
+
+.itemTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 5px;
+}
+
+.itemPrice {
+  font-size: 14px;
+  color: #718096;
+}
+
+.itemTotal {
+  font-weight: 600;
+  color: #2d3748;
+  min-width: 80px;
+  text-align: right;
+}
+
+.orderFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+}
+
+.orderTotal {
+  font-weight: 700;
+  color: #2d3748;
+  font-size: 18px;
+}
+
+.orderTotal span:first-child {
+  margin-right: 10px;
+}
+
+.trackButton {
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.trackButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .orderContainer {
+    padding: 20px;
+    margin-top: 80px;
+  }
+  
+  .orderHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .orderItem {
+    flex-wrap: wrap;
+  }
+  
+  .itemImage {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .itemTotal {
+    width: 100%;
+    text-align: left;
+    margin-top: 10px;
+    padding-left: 85px;
+  }
+  
+  .orderFooter {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .orderContainer {
+    padding: 15px;
+  }
+  
+  .orderTitle {
+    font-size: 24px;
+  }
+  
+  .itemImage {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .itemTitle {
+    font-size: 14px;
+  }
+  
+  .itemTotal {
+    padding-left: 65px;
+  }
+}
+
+
+
+
+/* Add these to your Order.module.css */
+
+.itemImageContainer {
+  position: relative;
+  margin-right: 15px;
+}
+
+.itemQuantity {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #667eea;
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.priceContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 5px 0;
+}
+
+.originalPrice {
+  text-decoration: line-through;
+  color: #718096;
+  font-size: 14px;
+}
+
+.discountPercentage {
+  background-color: #f56565;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.finalPrice {
+  font-weight: bold;
+  color: #2d3748;
+}
+
+.itemMeta {
+  display: flex;
+  gap: 10px;
+  font-size: 12px;
+  color: #718096;
+}
+
+.orderSummary {
+  width: 100%;
+  max-width: 300px;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.summaryRowTotal {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.orderActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.reorderButton {
+  background: white;
+  color: #667eea;
+  border: 1px solid #667eea;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.reorderButton:hover {
+  background: #f7fafc;
+}
