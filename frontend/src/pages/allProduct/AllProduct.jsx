@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react"
-// import { useParams } from "react-router-dom"
 import ProductCard from "../product/ProductCard"
 import styles from './all.module.css'
 import LayOut from "../layOut/LayOut"
 import {ProductUrl} from '../../Api/EndPoint'
 import FadeLoaderComponent from "../../component/Loader/FadeLoaderComponent"
 function AllProduct() {
-  // const { categoryName } = useParams(); 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-// console.log(categoryName);
   useEffect(() => {
     const fetchCategoryProducts = async () => {
       try {

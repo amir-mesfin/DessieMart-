@@ -4,7 +4,7 @@ import { db } from '../../utility/firebase';
 import { DataContext } from '../../component/dataProvider/DataProvider';
 import style from './Order.module.css';
 import { collection, doc, orderBy, onSnapshot, query } from "firebase/firestore";
-
+import { Type } from '../../utility/action.type';
 export default function Order() {
   const [{ user }, dispatch] = useContext(DataContext);
   const [orders, setOrders] = useState([]);
@@ -68,6 +68,20 @@ export default function Order() {
   const calculateDiscountedPrice = (price, discount) => {
     return (price - (price * discount / 100)).toFixed(2);
   };
+
+  const reorderItem = (againOrder) => {
+    orders?.forEach((eachOrder) => {
+      if (againOrder === eachOrder.id) {
+        eachOrder.basket.forEach((basketItem) => {
+          dispatch({
+            type: Type.ADD_TO_BASKET,
+            item: basketItem,
+          });
+        });
+      }
+    });
+  };
+  
 
   return (
     <LayOut>
@@ -178,7 +192,7 @@ export default function Order() {
                     
                     <div className={style.orderActions}>
                       <button className={style.trackButton}>Track Order</button>
-                      <button className={style.reorderButton}>Reorder</button>
+                      <button onClick={()=>reorderItem(eachOrder.id)}  className={style.reorderButton}>Reorder</button>
                     </div>
                   </div>
                 </div>
