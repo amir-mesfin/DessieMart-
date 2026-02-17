@@ -14,7 +14,7 @@
 
 ---
 
-## 🌟 Key Features
+## 🌟 Key Feature
 <div style="display: flex; flex-wrap: wrap; gap: 10px;">
   <div style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 10px; border-radius: 8px; flex: 1; min-width: 200px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
     <h3 style="color: #6a11cb;">💳 Secure Payments</h3>
